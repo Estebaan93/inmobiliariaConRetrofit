@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 //import com.example.inmobiliaria.databinding.FragmentHomeBinding;
+import com.example.inmobiliaria.R;
 import com.example.inmobiliaria.databinding.FragmentInicioBinding;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class InicioFragment extends Fragment {
   private FragmentInicioBinding binding;
@@ -28,6 +30,13 @@ public class InicioFragment extends Fragment {
 
     //final TextView textView = binding.textHome;
     //mv.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+    // Vincula el mapa directamente; la lógica de control está en el ViewModel
+    SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapa);
+
+    mv.inicializarMapa(mapFragment, getViewLifecycleOwner());
+
+
     View root = binding.getRoot();
     return root;
   }

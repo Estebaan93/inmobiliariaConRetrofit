@@ -27,7 +27,7 @@ public class SessionManager {
   }
 
   public boolean sesionActiva(){
-    String token= sp.getString(KEY_TOKEN, null);
+    String token= leerToken();
     return token!= null && !token.isEmpty();
   }
 

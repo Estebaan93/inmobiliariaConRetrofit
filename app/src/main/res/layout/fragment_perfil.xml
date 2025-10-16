@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,16 +8,143 @@
     tools:context=".ui.main.perfil.PerfilFragment">
 
   <TextView
-      android:id="@+id/text_gallery"
-      android:layout_width="match_parent"
+      android:id="@+id/tVTituloPerfil"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
-      android:layout_marginTop="8dp"
-      android:layout_marginEnd="8dp"
-      android:textAlignment="center"
-      android:textSize="20sp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
+      android:layout_marginTop="32dp"
+      android:text="Editar Perfil"
+      android:textSize="22sp"
+      android:textStyle="bold"
       app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <!-- DNI -->
+  <TextView
+      android:id="@+id/tVDniLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:text="DNI"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVTituloPerfil" />
+
+  <EditText
+      android:id="@+id/eTPerfilDni"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:inputType="number"
+      android:enabled="false"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVDniLabel" />
+
+  <!-- Nombre -->
+  <TextView
+      android:id="@+id/tVNombreLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="Nombre"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/eTPerfilDni" />
+
+  <EditText
+      android:id="@+id/eTPerfilNombre"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:inputType="textPersonName"
+      android:enabled="false"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVNombreLabel" />
+
+  <!-- Apellido -->
+  <TextView
+      android:id="@+id/tVApellidoLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="Apellido"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/eTPerfilNombre" />
+
+  <EditText
+      android:id="@+id/eTPerfilApellido"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:inputType="textPersonName"
+      android:enabled="false"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVApellidoLabel" />
+
+  <!-- Email -->
+  <TextView
+      android:id="@+id/tVEmailLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="Email"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/eTPerfilApellido" />
+
+  <EditText
+      android:id="@+id/eTPerfilEmail"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:inputType="textEmailAddress"
+      android:enabled="false"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVEmailLabel" />
+
+  <!-- Teléfono -->
+  <TextView
+      android:id="@+id/tVTelLabel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="Teléfono"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/eTPerfilEmail" />
+
+  <EditText
+      android:id="@+id/eTPerfilTel"
+      android:layout_width="250dp"
+      android:layout_height="wrap_content"
+      android:inputType="phone"
+      android:enabled="false"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/tVTelLabel" />
+
+  <!-- Botón -->
+  <Button
+      android:id="@+id/btnEditarActualizarPerfil"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="32dp"
+      android:text="Editar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/eTPerfilTel" />
+
+  <Button
+      android:id="@+id/btnCambiarPassword"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="52dp"
+      android:text="Cambiar contraseña"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/btnEditarActualizarPerfil" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

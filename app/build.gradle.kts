@@ -46,7 +46,11 @@ dependencies {
   implementation(libs.converter.scalars)
   implementation(libs.logging.interceptor)
   implementation(libs.legacy.support.v4)
+  implementation(libs.recyclerview)
+  implementation(libs.cardview)
+  implementation(libs.glide)
   testImplementation(libs.junit)
   androidTestImplementation(libs.ext.junit)
   androidTestImplementation(libs.espresso.core)
+  implementation("com.google.android.gms:play-services-maps:18.1.0")
 }

@@ -5,6 +5,10 @@
 
 
  <uses-permission android:name="android.permission.INTERNET"/>  <!--Permisos de internet-->
+ <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+ <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+ <!--uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/-->
+
   <application
       android:allowBackup="true"
       android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,6 +18,12 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/Theme.Inmobiliaria">
+
+    <!-- Clave de Google Maps -->
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDoDQZwG8PQoAPT4sY4FslY043Xu_cjTOk" />
+
     <!--login como punto de entrda -->
     <activity
         android:name=".ui.login.LoginActivity"

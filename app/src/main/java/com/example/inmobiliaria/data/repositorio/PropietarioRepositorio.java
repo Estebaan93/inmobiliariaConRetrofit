@@ -2,6 +2,7 @@
 package com.example.inmobiliaria.data.repositorio;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.inmobiliaria.data.model.Propietario;
 import com.example.inmobiliaria.data.preferencias.SessionManager;
@@ -33,10 +34,39 @@ public class PropietarioRepositorio {
 
 
   //Perfil
+  public void obtenerPerfil(Callback<Propietario> callback){
+    String token= leerToken();
+    if(token==null){
+      callback.onFailure(null, new Throwable("Token no disponible"));
+      return;
+    }
+    Call<Propietario> llamada= api.obtenerPerfil("Bearer " + token);
 
+    //Log.d("RESPUESTA_API","ObtenerDesdeRepo: "+ llamada);
+    llamada.enqueue(callback);
+  }
 
+  //Perfil actualizar
+  public void actualizarPerfil(Propietario propietario, Callback<Propietario> callback){
+    String token= leerToken();
+    if(token== null){
+      callback.onFailure(null,new Throwable("Token no disponible"));
+      return;
+    }
+    Call<Propietario> llamada= api.actualizarPropietario("Bearer "+token, propietario);
+    llamada.enqueue(callback);
+  }
 
-
+  //Cambiar contraseña
+  public void cambiarPassword(String actual, String nueva, Callback<Void> callback){
+    String token= leerToken();
+    if(token== null){
+      callback.onFailure(null,new Throwable("Token no disponible"));
+      return;
+    }
+    Call<Void> llamada= api.cambiarPassword("Bearer "+token, actual, nueva);
+    llamada.enqueue(callback);
+  }
 
   //Inmuebles
 
