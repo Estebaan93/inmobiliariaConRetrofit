@@ -21,24 +21,24 @@ public interface InmobiliariaService {
 
 
   //Obtener perfil de azure
-  /*@GET("api/Propietarios")
-  Call<Propietario> obtenerPerfil(@Header("Authorization") String token);*/
+  @GET("api/Propietarios")
+  Call<Propietario> obtenerPerfil(@Header("Authorization") String token);
 
   //Actualizar perfil de azure
-  /*@PUT("api/Propietarios/actualizar")
-  Call<Propietario> actualizarPropietario(@Header("Authorization") String token, @Body Propietario propietario);*/
+  @PUT("api/Propietarios/actualizar")
+  Call<Propietario> actualizarPropietario(@Header("Authorization") String token, @Body Propietario propietario);
 
   //Cambiar contraseña de azure
-  /*@FormUrlEncoded
+  @FormUrlEncoded
   @PUT("api/Propietarios/changePassword")
-  Call<Void> cambiarPassword(@Header("Authorization") String token, @Field("currentPassword") String currentPassword, @Field("newPassword")String newPassword);*/
+  Call<Void> cambiarPassword(@Header("Authorization") String token, @Field("currentPassword") String currentPassword, @Field("newPassword")String newPassword);
 
 
 
 
   //---LOCAL-----
   //Obtener perfil de api local
-  @GET("api/Propietarios/perfil")
+ /* @GET("api/Propietarios/perfil")
   Call<Propietario> obtenerPerfil(@Header("Authorization") String token);
 
   //Actualizar perfil de api local
@@ -50,6 +50,6 @@ public interface InmobiliariaService {
   @PUT("api/Propietarios/cambiarpassword")
   Call<Void> cambiarPassword(@Header("Authorization") String token, @Field("currentPassword") String currentPassword, @Field("newPassword")String newPassword);
 
-
+*/
 
 }

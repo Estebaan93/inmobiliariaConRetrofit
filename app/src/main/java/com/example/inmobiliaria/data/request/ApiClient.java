@@ -16,8 +16,8 @@ public class ApiClient {
               .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
               .create();
       Retrofit retrofit= new Retrofit.Builder()
-              .baseUrl(URL_BASE_API_LOCAL)
-              //.baseUrl(URL_BASE_AZURE)
+              //.baseUrl(URL_BASE_API_LOCAL)
+              .baseUrl(URL_BASE_AZURE)
               .addConverterFactory(ScalarsConverterFactory.create())
               .addConverterFactory(GsonConverterFactory.create(gson))
               .build();
