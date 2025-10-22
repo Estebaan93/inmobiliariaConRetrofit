@@ -3,7 +3,7 @@ package com.example.inmobiliaria.data.model;
 
 import java.io.Serializable;
 
-public class Propietario implements Serializable {// porque?
+public class Propietario implements Serializable {//
 
   //Los campos deben ser lo mismos que la BD (azure en este caso)
   private int idPropietario;

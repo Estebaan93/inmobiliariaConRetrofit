@@ -153,7 +153,7 @@ public class PerfilViewModel extends AndroidViewModel {
 
       @Override
       public void onFailure(Call<Void> call, Throwable t) {
-        mMensaje.postValue("Error de conexión: " + t.getMessage());
+        mMensaje.postValue("Error de conexin: " + t.getMessage());
       }
     });
 

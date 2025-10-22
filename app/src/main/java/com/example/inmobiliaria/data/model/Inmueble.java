@@ -3,7 +3,7 @@ package com.example.inmobiliaria.data.model;
 
 import java.io.Serializable;
 
-public class Inmueble implements Serializable {
+public class Inmueble implements Serializable { //Para poner en un bundle serializable
   private int idInmueble;
   private String direccion;
 

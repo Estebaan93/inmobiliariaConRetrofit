@@ -1,7 +1,10 @@
 //data/request/InmobiliariaService
 package com.example.inmobiliaria.data.request;
 
+import com.example.inmobiliaria.data.model.Inmueble;
 import com.example.inmobiliaria.data.model.Propietario;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,6 +36,15 @@ public interface InmobiliariaService {
   @PUT("api/Propietarios/changePassword")
   Call<Void> cambiarPassword(@Header("Authorization") String token, @Field("currentPassword") String currentPassword, @Field("newPassword")String newPassword);
 
+  //actualizar inmu
+  @PUT("api/Inmuebles/actualizar")
+  Call<Inmueble> actualizarInmueble(@Header ("Authorization") String token, @Body Inmueble inmueble); //Le pasamos un obj inmueble
+  //Un idInmueble y estado/disponiblidad para el check de cambiar su disponiblidad --- se puede llamar desde el detalleInmuebleViewModel
+
+
+  //Obtener inmuebles
+  @GET("api/Inmuebles")
+  Call<List<Inmueble>> obtenerInmuebles(@Header("Authorization") String token);
 
 
 

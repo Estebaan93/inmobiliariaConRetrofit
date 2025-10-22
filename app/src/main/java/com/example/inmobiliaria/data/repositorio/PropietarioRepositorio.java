@@ -4,10 +4,13 @@ package com.example.inmobiliaria.data.repositorio;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.inmobiliaria.data.model.Inmueble;
 import com.example.inmobiliaria.data.model.Propietario;
 import com.example.inmobiliaria.data.preferencias.SessionManager;
 import com.example.inmobiliaria.data.request.ApiClient;
 import com.example.inmobiliaria.data.request.InmobiliariaService;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,12 +71,33 @@ public class PropietarioRepositorio {
     llamada.enqueue(callback);
   }
 
+
+
   //Inmuebles
+  public void obtenerInmuebles(Callback<List<Inmueble>> callback) {
+    String token = leerToken();
+    if (token == null) {
+      callback.onFailure(null, new Throwable("Token no disponible"));
+      return;
+    }
+    Call<List<Inmueble>> llamada = api.obtenerInmuebles("Bearer " + token);
+    llamada.enqueue(callback);
+  }
+  public void actualizarInmueble(Inmueble inmueble, Callback<Inmueble> callback) {
+    String token = leerToken();
+    if (token == null) {
+      callback.onFailure(null, new Throwable("Token no disponible"));
+      return;
+    }
 
-
+    Call<Inmueble> llamada = api.actualizarInmueble("Bearer " + token, inmueble);
+    llamada.enqueue(callback);
+  }
 
 
   //Contratos/pagos
+
+
 
 
 
