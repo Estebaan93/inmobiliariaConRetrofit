@@ -28,7 +28,8 @@ public class PerfilFragment extends Fragment {
 
     //Observamos datos del viewModel
     mv.getMPropietario().observe(getViewLifecycleOwner(), p ->{
-      binding.eTPerfilDni.setText(p.getDni());
+      //casteo de dni
+      binding.eTPerfilDni.setText(String.valueOf(p.getDni()));
       binding.eTPerfilNombre.setText(p.getNombre());
       binding.eTPerfilApellido.setText(p.getApellido());
       binding.eTPerfilEmail.setText(p.getEmail());

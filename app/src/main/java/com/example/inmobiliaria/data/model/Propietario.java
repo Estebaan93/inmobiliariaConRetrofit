@@ -7,7 +7,7 @@ public class Propietario implements Serializable {//
 
   //Los campos deben ser lo mismos que la BD (azure en este caso)
   private int idPropietario;
-  private String dni;
+  private int dni;
   private String apellido;
   private String nombre;
   private String telefono;
@@ -15,7 +15,7 @@ public class Propietario implements Serializable {//
   private String clave;
 
 
-  public Propietario(int idPropietario, String dni, String apellido, String nombre, String telefono, String email, String clave) {
+  public Propietario(int idPropietario, int dni, String apellido, String nombre, String telefono, String email, String clave) {
     /*Aca los nombres puede ser cualquiera*/
     this.idPropietario = idPropietario;
     this.dni = dni;
@@ -37,11 +37,11 @@ public class Propietario implements Serializable {//
     this.idPropietario = idPropietario;
   }
 
-  public String getDni() {
+  public int getDni() {
     return dni;
   }
 
-  public void setDni(String dni) {
+  public void setDni(int dni) {
     this.dni = dni;
   }
 

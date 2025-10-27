@@ -3,6 +3,7 @@ package com.example.inmobiliaria.ui.main.perfil;
 
 import android.app.Application;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -73,7 +74,7 @@ public class PerfilViewModel extends AndroidViewModel {
   }
 
   //Boton principal
-  public void onBtnPresionado(Propietario nuevo){
+  /*public void onBtnPresionado(Propietario nuevo){
     Boolean modoEdicion= mEditable.getValue();
     if(modoEdicion != null && modoEdicion){
       guardarCambios(nuevo);
@@ -81,7 +82,7 @@ public class PerfilViewModel extends AndroidViewModel {
       mEditable.setValue(true);
       mBtnTx.setValue("Guardar");
     }
-  }
+  }*/
   //Guardar cambios
   private void guardarCambios(Propietario actualizado){
     mMensaje.setValue("");
@@ -108,15 +109,43 @@ public class PerfilViewModel extends AndroidViewModel {
   }
 
   // Mapea datos desde la vista
-  public void actualizarDatosDesdeVista(String dni, String nombre, String apellido, String email, String telefono) {
-    Propietario p = new Propietario();
-    p.setDni(dni);
-    p.setNombre(nombre);
-    p.setApellido(apellido);
-    p.setEmail(email);
-    p.setTelefono(telefono);
-    onBtnPresionado(p);
-  }
+  public void actualizarDatosDesdeVista(String dniStr, String nombre, String apellido, String email, String telefono) {
+    Boolean modoEdicion = mEditable.getValue();
+    if(modoEdicion == null) return;
+    if (modoEdicion){
+      if (dniStr.isEmpty() || nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || telefono.isEmpty()) {
+        mMensaje.postValue("Todos los campos son obligatorios");
+        return;
+      }
+      int dni;
+      try{
+        dni= Integer.parseInt(dniStr);
+        if(dni<0){
+          mMensaje.postValue("El DNI no puede ser negativo");
+          return;
+        }
+      }catch (NumberFormatException e){
+        mMensaje.postValue("El DNI debe ser un número");
+        return;
+      }
+      if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        mMensaje.postValue("Ingrese un email válido");
+        return;
+      }
+      Propietario p = new Propietario();
+      p.setDni(dni);
+      p.setNombre(nombre);
+      p.setApellido(apellido);
+      p.setEmail(email);
+      p.setTelefono(telefono);
+      //onBtnPresionado(p);
+      guardarCambios(p);
+    }else{
+      mEditable.setValue(true);
+      mBtnTx.setValue("Guardar");
+    }
+    }
+
 
   // Devuelve mensaje actual solo si no está vacío
   /*public String obtenerMensajeVisible() {
