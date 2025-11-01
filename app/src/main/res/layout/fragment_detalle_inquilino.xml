@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.inquilinos.DetalleInquilinoFragment"
+    android:background="#F8F8F8">
+
+  <TextView
+      android:id="@+id/tvTituloDetalle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="Informacion del Inquilino"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.496"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/labelCodigo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:text="Codigo:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/tvTituloDetalle" />
+
+  <TextView
+      android:id="@+id/tvCodigo"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelCodigo"
+      app:layout_constraintStart_toEndOf="@+id/labelTelefono" />
+  <TextView
+      android:id="@+id/labelNombre"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="Nombre:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelCodigo" />
+
+  <TextView
+      android:id="@+id/tvNombre"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelNombre"
+      app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+  <TextView
+      android:id="@+id/labelApellido"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="Apellido:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelNombre" />
+
+  <TextView
+      android:id="@+id/tvApellido"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelApellido"
+      app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+  <TextView
+      android:id="@+id/labelDNI"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="DNI:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelApellido" />
+
+  <TextView
+      android:id="@+id/tvDNI"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelDNI"
+      app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+
+  <TextView
+      android:id="@+id/labelEmail"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="Correo:"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelDNI" />
+
+  <TextView
+      android:id="@+id/tvEmail"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelEmail"
+      app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+
+  <TextView
+      android:id="@+id/labelTelefono"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="Telefono:"
+      android:textSize="16sp"
+      android:textStyle="bold"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelEmail" />
+
+  <TextView
+      android:id="@+id/tvTelefono"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16sp"
+      app:layout_constraintBaseline_toBaselineOf="@+id/labelTelefono"
+      app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+  <!--
+  <TextView
+      android:id="@+id/labelGarante"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="12dp"
+      android:text="Garante:"
+      android:textStyle="bold"
+      android:textSize="16sp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/labelTelefono" />
+
+    <TextView
+        android:id="@+id/tvGarante"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelGarante"
+        app:layout_constraintStart_toStartOf="@+id/tvCodigo" />
+
+    <TextView
+        android:id="@+id/labelGaranteTel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Telefono garante:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelGarante" />
+
+    <TextView
+        android:id="@+id/tvGaranteTel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelGaranteTel"
+        app:layout_constraintStart_toStartOf="@+id/tvCodigo" />-->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

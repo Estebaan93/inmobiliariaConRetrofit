@@ -68,7 +68,7 @@ public class PerfilViewModel extends AndroidViewModel {
 
       @Override
       public void onFailure(Call<Propietario> call, Throwable t) {
-        mMensaje.postValue("Error de conexión: " + t.getMessage());
+        mMensaje.postValue("Error de conexion: " + t.getMessage());
       }
     });
   }
@@ -103,7 +103,7 @@ public class PerfilViewModel extends AndroidViewModel {
       @Override
       public void onFailure(Call<Propietario> call, Throwable t) {
         Log.d("ERROR_API_ACTUALIZAR", "Error de la API "+ t.getMessage());
-        mMensaje.postValue("Error de conexión: " + t.getMessage());
+        mMensaje.postValue("Error de conexion: " + t.getMessage());
       }
     });
   }
@@ -125,11 +125,11 @@ public class PerfilViewModel extends AndroidViewModel {
           return;
         }
       }catch (NumberFormatException e){
-        mMensaje.postValue("El DNI debe ser un número");
+        mMensaje.postValue("El DNI debe ser un numero");
         return;
       }
       if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-        mMensaje.postValue("Ingrese un email válido");
+        mMensaje.postValue("Ingrese un email valido");
         return;
       }
       Propietario p = new Propietario();

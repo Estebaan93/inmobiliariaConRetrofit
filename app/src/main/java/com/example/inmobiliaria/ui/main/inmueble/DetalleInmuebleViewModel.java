@@ -4,58 +4,54 @@ package com.example.inmobiliaria.ui.main.inmueble;
 import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.inmobiliaria.data.model.Inmueble;
-import com.example.inmobiliaria.data.repositorio.PropietarioRepositorio;
+import com.example.inmobiliaria.data.repositorio.InmuebleRepositorio;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetalleInmuebleViewModel extends AndroidViewModel {
-  //recibe el bundle(bundle) y se la muestra a la vista
   private final MutableLiveData<Inmueble> inmueble = new MutableLiveData<>();
   private final MutableLiveData<String> mensaje = new MutableLiveData<>();
-  private final PropietarioRepositorio repo;
-  private boolean cargandoDatos=true; //evitar que salga el toast con inmu aactuazliado
+  private final MutableLiveData<Integer> colorTexto = new MutableLiveData<>();
+  private final MutableLiveData<Integer> colorFondo = new MutableLiveData<>();
+  private final MutableLiveData<Integer> visibilidad = new MutableLiveData<>();
+  private final InmuebleRepositorio repo;
+  private boolean cargandoDatos = true;
 
   public DetalleInmuebleViewModel(@NonNull Application application) {
     super(application);
-    repo = new PropietarioRepositorio(application);
-  }
-  // TODO: Implement the ViewModel
-
-  //LiveData observables
-  public LiveData<Inmueble> getInmueble() {
-    return inmueble;
+    repo = new InmuebleRepositorio(application);
+    ocultarMensaje();
   }
 
-  public LiveData<String> getMensaje() {
-    return mensaje;
-  }
+  public LiveData<Inmueble> getInmueble() { return inmueble; }
+  public LiveData<String> getMensaje() { return mensaje; }
+  public LiveData<Integer> getColorTexto() { return colorTexto; }
+  public LiveData<Integer> getColorFondo() { return colorFondo; }
+  public LiveData<Integer> getVisibilidad() { return visibilidad; }
 
-  //Seteamos el inmueble recibido desde el Bundle
   public void setInmuebleDesdeBundle(Bundle bundle) {
     if (bundle != null && bundle.containsKey("inmueble")) {
       Inmueble i = (Inmueble) bundle.getSerializable("inmueble");
       inmueble.setValue(i);
-      //cargandoDatos=false;  //despues q caego habilitamos eventos
     }
   }
 
-  public void marcarCargaCompleta(){
-    cargandoDatos=false;
+  public void marcarCargaCompleta() {
+    cargandoDatos = false;
   }
 
-  //Actualiza la disponibilidad (CheckBox) en el backend Azure
   public void actualizarDisponibilidad(boolean disponible) {
-    if(cargandoDatos) return;
+    if (cargandoDatos) return;
 
     Inmueble i = inmueble.getValue();
     if (i == null) return;
@@ -67,23 +63,37 @@ public class DetalleInmuebleViewModel extends AndroidViewModel {
       public void onResponse(Call<Inmueble> call, Response<Inmueble> response) {
         if (response.isSuccessful() && response.body() != null) {
           inmueble.postValue(response.body());
-          mensaje.postValue("Disponibilidad actualizada correctamente");
+          exito("Disponibilidad actualizada");
           Log.d("API", "Inmueble actualizado: " + response.body().getIdInmueble());
         } else {
-          mensaje.postValue("Error al actualizar: " + response.code());
-          Log.e("API", "Error PUT /api/Inmuebles/actualizar → " + response.code());
+          error("Error al actualizar (" + response.code() + ")");
+          Log.e("API", "Error PUT: " + response.code());
         }
       }
 
       @Override
       public void onFailure(Call<Inmueble> call, Throwable t) {
-        mensaje.postValue("Error de conexion: " + t.getMessage());
-        Log.e("API", "Fallo conexion Azure: " + t.getMessage());
+        error("Error de conexión");
+        Log.e("API", "Fallo: " + t.getMessage());
       }
     });
   }
 
+  private void error(String msg) {
+    mensaje.setValue(msg);
+    colorTexto.setValue(0xFFD32F2F);
+    colorFondo.setValue(0xFFFFEBEE);
+    visibilidad.setValue(View.VISIBLE);
+  }
 
+  private void exito(String msg) {
+    mensaje.setValue(msg);
+    colorTexto.setValue(0xFF2E7D32);
+    colorFondo.setValue(0xFFE8F5E9);
+    visibilidad.setValue(View.VISIBLE);
+  }
 
-
+  private void ocultarMensaje() {
+    visibilidad.setValue(View.GONE);
+  }
 }

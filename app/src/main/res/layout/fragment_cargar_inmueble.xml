@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.inmueble.CargarInmuebleFragment" >
+
+  <EditText
+      android:id="@+id/etAmbientes"
+      android:layout_width="410dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="8dp"
+      android:ems="10"
+      android:hint="Ambientes"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etSuperficie" />
+
+  <EditText
+      android:id="@+id/etSuperficie"
+      android:layout_width="410dp"
+      android:layout_height="40dp"
+      android:layout_marginTop="4dp"
+      android:ems="10"
+      android:hint="Superficie"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etTipo" />
+
+  <EditText
+      android:id="@+id/etUso"
+      android:layout_width="410dp"
+      android:layout_height="40dp"
+      android:layout_marginBottom="417dp"
+      android:ems="10"
+      android:hint="Uso"
+      android:inputType="text"
+      android:minHeight="48dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etDireccion"
+      app:layout_constraintVertical_bias="0.0" />
+
+  <EditText
+      android:id="@+id/etTipo"
+      android:layout_width="409dp"
+      android:layout_height="39dp"
+      android:layout_marginBottom="417dp"
+      android:ems="10"
+      android:hint="Tipo"
+      android:inputType="text"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etValor"
+      app:layout_constraintVertical_bias="0.0" />
+
+  <EditText
+      android:id="@+id/etValor"
+      android:layout_width="410dp"
+      android:layout_height="40dp"
+      android:layout_marginBottom="496dp"
+      android:ems="10"
+      android:hint="Valor"
+      android:inputType="text"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etUso"
+      app:layout_constraintVertical_bias="0.0" />
+
+  <TextView
+      android:id="@+id/textView5"
+      android:layout_width="match_parent"
+      android:layout_height="28dp"
+      android:layout_marginTop="16dp"
+      android:text="Agregar Inmueble"
+      android:textAlignment="center"
+      android:textSize="22sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+      android:id="@+id/etDireccion"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="4dp"
+      android:ems="10"
+      android:hint="Direccion"
+      android:inputType="text"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+  <EditText
+      android:id="@+id/etLatitud"
+      android:layout_width="410dp"
+      android:layout_height="38dp"
+      android:layout_marginTop="8dp"
+      android:ems="10"
+      android:hint="Latitud (ej: 33.3017)"
+      android:inputType="numberDecimal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etAmbientes" />
+
+  <EditText
+      android:id="@+id/etLongitud"
+      android:layout_width="412dp"
+      android:layout_height="43dp"
+      android:layout_marginTop="8dp"
+      android:ems="10"
+      android:hint="Latitud (ej: 66.4562)"
+      android:inputType="numberDecimal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etLatitud" />
+
+  <TextView
+      android:id="@+id/tvMensaje"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="200dp"
+      android:padding="12dp"
+      android:textSize="14sp"
+      android:visibility="gone"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="1.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etLongitud"
+      tools:visibility="visible" />
+
+  <CheckBox
+      android:id="@+id/cbDisp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="28dp"
+      android:text="Disponible"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.051"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/etLongitud" />
+
+  <Button
+      android:id="@+id/btnFoto"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="112dp"
+      android:text="+Foto"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.915"
+      app:layout_constraintStart_toEndOf="@+id/cbDisp"
+      app:layout_constraintTop_toBottomOf="@+id/etLongitud" />
+
+  <Button
+      android:id="@+id/btnCargar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Cargar Inmueble"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.485"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/imgView"
+      app:layout_constraintVertical_bias="0.937" />
+
+  <ImageView
+      android:id="@+id/imgView"
+      android:layout_width="114dp"
+      android:layout_height="91dp"
+      android:layout_marginTop="20dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.061"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/cbDisp"
+      tools:src="@tools:sample/avatars" />
+</androidx.constraintlayout.widget.ConstraintLayout>

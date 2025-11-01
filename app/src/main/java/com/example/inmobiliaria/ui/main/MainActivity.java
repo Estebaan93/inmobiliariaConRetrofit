@@ -4,11 +4,15 @@ package com.example.inmobiliaria.ui.main;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.inmobiliaria.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -22,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
   private AppBarConfiguration mAppBarConfiguration;
   private ActivityMainBinding binding;
+  private FloatingActionButton fab;
+  private MainViewModel vm;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +35,12 @@ public class MainActivity extends AppCompatActivity {
 
     binding = ActivityMainBinding.inflate(getLayoutInflater());
     setContentView(binding.getRoot());
+    vm= new ViewModelProvider(this).get(MainViewModel.class);
 
     setSupportActionBar(binding.appBarMain.toolbar);
+    fab=findViewById(R.id.fab);
+    fab.hide(); //Ocultamos
+
     binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -48,7 +58,57 @@ public class MainActivity extends AppCompatActivity {
             .build();
     NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
     NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+
     NavigationUI.setupWithNavController(navigationView, navController);
+
+    navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+      if (destination.getId() == R.id.nav_inmueble) {
+        fab.show();
+        fab.setImageResource(android.R.drawable.ic_input_add);
+        fab.setOnClickListener(v ->
+                navController.navigate(R.id.cargarInmuebleFragment)
+        );
+      } else {
+        fab.hide();
+      }
+    });
+    observarViewModel();
+    vm.cargarDatos();
+
+  }
+
+  private void observarViewModel() {
+    // Observa mensajes de error
+    vm.getmMensaje().observe(this, mensaje -> {
+      Toast.makeText(this, mensaje, Toast.LENGTH_LONG).show();
+    });
+
+    //
+
+    //
+    View headerView = binding.navView.getHeaderView(0);
+    TextView tvNombre = headerView.findViewById(R.id.tVNombreHeader);
+    TextView tvEmail = headerView.findViewById(R.id.tVcorreoHeader);
+    //ImageView ivAvatar = headerView.findViewById(R.id.imgHeader);
+
+    //
+    vm.getmNombre().observe(this, nombre -> {
+      tvNombre.setText(nombre);
+    });
+
+    //
+    vm.getmCorreo().observe(this, email -> {
+      tvEmail.setText(email);
+    });
+  }
+
+
+
+
+
+  public FloatingActionButton getFab(){
+
+    return fab;
   }
 
   @Override

@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.inmobiliaria.data.model.Inmueble;
+import com.example.inmobiliaria.data.repositorio.InmuebleRepositorio;
 import com.example.inmobiliaria.data.repositorio.PropietarioRepositorio;
 
 import java.util.List;
@@ -21,10 +22,11 @@ import retrofit2.Response;
 public class InmuebleViewModel extends AndroidViewModel {
   private MutableLiveData<List<Inmueble>> listaInmuebles= new MutableLiveData<>();
   private final MutableLiveData<String> mensaje = new MutableLiveData<>();
-  private final PropietarioRepositorio repo;
+  //private final PropietarioRepositorio repo;
+  private final InmuebleRepositorio repo;
   public InmuebleViewModel(@NonNull Application application) {
     super(application);
-    repo= new PropietarioRepositorio(application);
+    repo= new InmuebleRepositorio(application);
     cargarInmueblesAPI();
   }
 

@@ -74,7 +74,7 @@ public class PropietarioRepositorio {
 
 
   //Inmuebles
-  public void obtenerInmuebles(Callback<List<Inmueble>> callback) {
+  /*public void obtenerInmuebles(Callback<List<Inmueble>> callback) {
     String token = leerToken();
     if (token == null) {
       callback.onFailure(null, new Throwable("Token no disponible"));
@@ -92,7 +92,7 @@ public class PropietarioRepositorio {
 
     Call<Inmueble> llamada = api.actualizarInmueble("Bearer " + token, inmueble);
     llamada.enqueue(callback);
-  }
+  }*/
 
 
   //Contratos/pagos

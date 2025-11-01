@@ -32,7 +32,7 @@ public class InmuebleFragment extends Fragment {
 
     configurarRecycler();
     observarViewModel();
-
+    mv.getListaInmuebles();
     return binding.getRoot();
   }
 
@@ -47,6 +47,13 @@ public class InmuebleFragment extends Fragment {
     mv.getListaInmuebles().observe(getViewLifecycleOwner(), adapter::actualizarLista);
     mv.getMensaje().observe(getViewLifecycleOwner(), m ->
             Toast.makeText(requireContext(), m, Toast.LENGTH_SHORT).show());
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    // Recargar la lista de inmuebles cada vez que se vuelve a este fragmento
+    mv.cargarInmueblesAPI();
   }
 
   @Override

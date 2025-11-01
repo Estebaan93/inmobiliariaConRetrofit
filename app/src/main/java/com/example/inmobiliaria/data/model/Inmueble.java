@@ -6,26 +6,25 @@ import java.io.Serializable;
 public class Inmueble implements Serializable { //Para poner en un bundle serializable
   private int idInmueble;
   private String direccion;
-
-
   private double valor;
   private Propietario propietario;
+  private Inquilino inquilino;
   private String uso;
   private String tipo;
   private int ambientes;
-
   private int superficie;
   private double latitud;
   private double longitud;
-
   private String imagen;
   private boolean disponible;
 
-  public Inmueble(int idInmueble, String direccion, double valor, Propietario propietario, String uso, String tipo, int ambientes, int superficie, double latitud, double longitud, String imagen, boolean disponible) {
+
+  public Inmueble(int idInmueble, String direccion, double valor, Propietario propietario, Inquilino inquilino, String uso, String tipo, int ambientes, int superficie, double latitud, double longitud, String imagen, boolean disponible) {
     this.idInmueble = idInmueble;
     this.direccion = direccion;
     this.valor = valor;
     this.propietario = propietario;
+    this.inquilino = inquilino;
     this.uso = uso;
     this.tipo = tipo;
     this.ambientes = ambientes;
@@ -45,6 +44,14 @@ public class Inmueble implements Serializable { //Para poner en un bundle serial
 
   public void setIdInmueble(int idInmueble) {
     this.idInmueble = idInmueble;
+  }
+
+  public Inquilino getInquilino() {
+    return inquilino;
+  }
+
+  public void setInquilino(Inquilino inquilino) {
+    this.inquilino = inquilino;
   }
 
   public String getDireccion() {
