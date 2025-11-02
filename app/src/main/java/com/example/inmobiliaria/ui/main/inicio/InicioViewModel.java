@@ -21,31 +21,22 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class InicioViewModel extends AndroidViewModel {
 
-  private MutableLiveData<MapaActual> mMapaActual;
+  private MutableLiveData<MapaActual> mapaActual= new MutableLiveData<>();
 
   public InicioViewModel(@NonNull Application application) {
     super(application);
-
-  }
-
-  public LiveData<MapaActual>getMMapaActual(){
-    if(mMapaActual==null){
-      mMapaActual= new MutableLiveData<>();
-    }
-    return mMapaActual;
-  }
-
-  public void cargarMapa(){
-    MapaActual mapaActual= new MapaActual();
-    mMapaActual.setValue(mapaActual);
-  }
-
-  public void inicializarMapa(SupportMapFragment mapFragment, LifecycleOwner owner) {
-    getMMapaActual().observe(owner, mapaActual -> mapFragment.getMapAsync(mapaActual));
     cargarMapa();
   }
 
-  public class MapaActual implements OnMapReadyCallback{
+  public LiveData<MapaActual> getMapaActual() {
+    return mapaActual;
+  }
+
+  private void cargarMapa() {
+    mapaActual.setValue(new MapaActual());
+  }
+
+    public class MapaActual implements OnMapReadyCallback{
     LatLng sanLuis = new LatLng(-33.280576, -66.332482);
     LatLng ulp = new LatLng(-33.150720, -66.306864);
     @Override

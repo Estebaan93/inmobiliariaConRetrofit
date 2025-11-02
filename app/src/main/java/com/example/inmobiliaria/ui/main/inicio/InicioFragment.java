@@ -34,11 +34,15 @@ public class InicioFragment extends Fragment {
     // Vincula el mapa directamente; la lógica de control está en el ViewModel
     SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapa);
 
-    mv.inicializarMapa(mapFragment, getViewLifecycleOwner());
+    configurarMapa();
 
 
     View root = binding.getRoot();
     return root;
+  }
+  private void configurarMapa() {
+    SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapa);
+    mv.getMapaActual().observe(getViewLifecycleOwner(), mapaActual -> mapFragment.getMapAsync(mapaActual));
   }
 
   @Override
