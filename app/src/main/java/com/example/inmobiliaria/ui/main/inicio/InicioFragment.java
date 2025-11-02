@@ -28,10 +28,9 @@ public class InicioFragment extends Fragment {
     //mv = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication())).get(InicioViewModel.class);
     mv= new ViewModelProvider(requireActivity()).get(InicioViewModel.class);
 
-    //final TextView textView = binding.textHome;
-    //mv.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-    // Vincula el mapa directamente; la lógica de control está en el ViewModel
+
+    // Vincula el mapa directamente; la logica de control está en el ViewModel
     SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapa);
 
     configurarMapa();
