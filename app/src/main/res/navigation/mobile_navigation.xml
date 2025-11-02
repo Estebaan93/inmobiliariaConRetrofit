@@ -52,7 +52,13 @@
       android:id="@+id/nav_contrato"
       android:name="com.example.inmobiliaria.ui.main.contratos.ContratoFragment"
       android:label="Contrato"
-      tools:layout="@layout/fragment_contrato" />
+      tools:layout="@layout/fragment_contrato" >
+    <action
+        android:id="@+id/action_nav_contrato_to_detalleContratoFragment"
+        app:destination="@id/detalleContratoFragment" />
+  </fragment>
+
+
 
   <fragment
       android:id="@+id/nav_logout"
@@ -78,6 +84,38 @@
         android:id="@+id/action_detalleInquilinoFragment_to_nav_inquilino"
         app:destination="@id/nav_inquilino" />
   </fragment>
+
+  <fragment
+      android:id="@+id/detalleContratoFragment"
+      android:name="com.example.inmobiliaria.ui.main.contratos.DetalleContratoFragment"
+      android:label="Detalle del Contrato"
+      tools:layout="@layout/fragment_detalle_contrato">
+    <!-- Acción para ir a Pagos -->
+    <action
+        android:id="@+id/action_detalleContratoFragment_to_pagosFragment"
+        app:destination="@id/pagosFragment" />
+
+    <!-- Argumento: Recibe el Inmueble desde la lista -->
+    <argument
+        android:name="inmueble"
+        app:argType="com.example.inmobiliaria.data.model.Inmueble" />
+  </fragment>
+
+  <!-- 3. AÑADIMOS EL NUEVO FRAGMENT 'pagosFragment' -->
+  <fragment
+      android:id="@+id/pagosFragment"
+      android:name="com.example.inmobiliaria.ui.main.pagos.PagosFragment"
+      android:label="Pagos del Contrato"
+      tools:layout="@layout/fragment_pagos" >
+
+    <!-- Argumento: Recibe el ID del contrato desde el detalle -->
+    <argument
+        android:name="contratoId"
+        app:argType="integer" />
+  </fragment>
+
+
+
 
 
 </navigation>

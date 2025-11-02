@@ -76,7 +76,7 @@ public class InquilinoViewModel extends AndroidViewModel {
     });
   }
 
-  /*Filtra los inmuebles que tienen contratos*/
+  /*Filtra los inmuebles que tienen/tuvieron contratos*/
   private void filtrarInmueblesConContratos(List<Inmueble> todosInmuebles) {
     inmueblesConInquilinos.clear();
     verificarContratosPorInmueble(todosInmuebles, 0);

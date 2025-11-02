@@ -4,6 +4,7 @@ package com.example.inmobiliaria.data.request;
 import com.example.inmobiliaria.data.model.Contrato;
 import com.example.inmobiliaria.data.model.Inmueble;
 import com.example.inmobiliaria.data.model.Inquilino;
+import com.example.inmobiliaria.data.model.Pago;
 import com.example.inmobiliaria.data.model.Propietario;
 
 import java.util.List;
@@ -79,5 +80,9 @@ public interface InmobiliariaService {
   Call<List<Inmueble>> obtenerInmueblesAlquilados(@Header("Authorization") String token);
 
 
+  /*Pagos*/
+  /*Obtener pagos por id contrato*/
+  @GET("api/pagos/contrato/{id}")
+  Call<List<Pago>> obtenerPagosPorContrato(@Header("Authorization") String token, @Path("id") int idContrato);
 
 }

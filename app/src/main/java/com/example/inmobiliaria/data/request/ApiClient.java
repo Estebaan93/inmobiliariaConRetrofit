@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
-  public static final String URL_BASE_API_LOCAL= "http://localhost:5083/api/propietarios/";
+  public static final String URL_BASE_API_LOCAL= "http://localhost:5083/api/";
   public static final String URL_BASE_AZURE= "https://inmobiliariaulp-amb5hwfqaraweyga.canadacentral-01.azurewebsites.net/"; //Tiene barra en la interface empieza sin barra
   private static InmobiliariaService service;
   public static InmobiliariaService getApiInmobiliaria(){
