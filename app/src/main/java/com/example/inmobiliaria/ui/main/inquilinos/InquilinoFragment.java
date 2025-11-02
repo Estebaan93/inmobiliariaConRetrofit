@@ -50,13 +50,7 @@ public class InquilinoFragment extends Fragment {
 
     adapter = new InquilinoAdapter(
             getContext(),
-            new ArrayList<>(),
-            inmueble -> {
-              Bundle bundle = new Bundle();
-              bundle.putSerializable("inmueble", inmueble);
-              Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main)
-                      .navigate(R.id.detalleInquilinoFragment, bundle);
-            }
+            new ArrayList<>()
     );
 
     binding.itemListaInmuebles.setAdapter(adapter);
@@ -75,9 +69,7 @@ public class InquilinoFragment extends Fragment {
     );
 
     // Observer para la lista de inmuebles
-    vm.getMLista().observe(getViewLifecycleOwner(), inmuebles ->
-            adapter.setLista(inmuebles)
-    );
+    vm.getMLista().observe(getViewLifecycleOwner(), adapter::setLista);
   }
 
   @Override

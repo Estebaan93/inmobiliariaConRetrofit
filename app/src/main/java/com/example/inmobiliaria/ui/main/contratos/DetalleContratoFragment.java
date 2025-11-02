@@ -1,4 +1,4 @@
-//ui/main/contratos/DetalleContratoFragment
+// ui/main/contratos/DetalleContratoFragment
 package com.example.inmobiliaria.ui.main.contratos;
 
 import android.os.Bundle;
@@ -14,12 +14,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.inmobiliaria.R;
-
 import com.example.inmobiliaria.databinding.FragmentDetalleContratoBinding;
 
 public class DetalleContratoFragment extends Fragment {
   private DetalleContratoViewModel vm;
   private FragmentDetalleContratoBinding binding;
+
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
@@ -30,64 +30,34 @@ public class DetalleContratoFragment extends Fragment {
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-
-    // Inicializar ViewModel
     vm = new ViewModelProvider(this).get(DetalleContratoViewModel.class);
-
-    // Configurar observadores
     configurarObservadores();
-
-    // Configurar listeners
-    configurarListeners();
-
-    // Cargar datos
     vm.cargarContrato(getArguments());
   }
 
   private void configurarObservadores() {
-    // Observar datos del contrato
-    vm.getMContratoId().observe(getViewLifecycleOwner(), contratoId ->
-            binding.tvContratoId.setText(contratoId)
+    // Observadores para llenar la UI (sin cambios)
+    vm.getMContratoId().observe(getViewLifecycleOwner(), binding.tvContratoId::setText);
+    vm.getMFechaInicio().observe(getViewLifecycleOwner(), binding.tvFechaInicio::setText);
+    vm.getMFechaFin().observe(getViewLifecycleOwner(), binding.tvFechaFin::setText);
+    vm.getMMonto().observe(getViewLifecycleOwner(), binding.tvMonto::setText);
+    vm.getMInquilinoNombre().observe(getViewLifecycleOwner(), binding.tvInquilinoNombre::setText);
+    vm.getMInmuebleDireccion().observe(getViewLifecycleOwner(), binding.tvInmuebleDireccion::setText);
+
+    vm.getMError().observe(getViewLifecycleOwner(), error ->
+            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show()
     );
 
-    vm.getMFechaInicio().observe(getViewLifecycleOwner(), fechaInicio ->
-            binding.tvFechaInicio.setText(fechaInicio)
-    );
-
-    vm.getMFechaFin().observe(getViewLifecycleOwner(), fechaFin ->
-            binding.tvFechaFin.setText(fechaFin)
-    );
-
-    vm.getMMonto().observe(getViewLifecycleOwner(), monto ->
-            binding.tvMonto.setText(monto)
-    );
-
-    vm.getMInquilinoNombre().observe(getViewLifecycleOwner(), inquilino ->
-            binding.tvInquilinoNombre.setText(inquilino)
-    );
-
-    vm.getMInmuebleDireccion().observe(getViewLifecycleOwner(), direccion ->
-            binding.tvInmuebleDireccion.setText(direccion)
-    );
-
-    // Observar estados
-    vm.getMVisibilidadCargando().observe(getViewLifecycleOwner(), visibilidad -> {
-
+    // VVV MODIFICADO: Observador de Contrato
+    vm.getMContrato().observe(getViewLifecycleOwner(), contrato -> {
+      binding.btnVerPagos.setOnClickListener(v -> {
+        // El Fragment crea el Bundle y navega
+        Bundle bundle = new Bundle();
+        bundle.putInt("contratoId", contrato.getIdContrato());
+        Navigation.findNavController(v)
+                .navigate(R.id.action_detalleContratoFragment_to_pagosFragment, bundle);
+      });
     });
-
-    vm.getMError().observe(getViewLifecycleOwner(), error -> {
-      Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show();
-    });
-
-    // Observar evento de navegacion
-    vm.getMEventoNavegar().observe(getViewLifecycleOwner(), bundle -> {
-      Navigation.findNavController(binding.getRoot())
-              .navigate(R.id.action_detalleContratoFragment_to_pagosFragment, bundle);
-      vm.finNavegacion();
-    });
-  }
-  private void configurarListeners() {
-    binding.btnVerPagos.setOnClickListener(v -> vm.navegarAPagos());
   }
 
   @Override
@@ -95,8 +65,4 @@ public class DetalleContratoFragment extends Fragment {
     super.onDestroyView();
     binding = null;
   }
-
-
-
-
 }

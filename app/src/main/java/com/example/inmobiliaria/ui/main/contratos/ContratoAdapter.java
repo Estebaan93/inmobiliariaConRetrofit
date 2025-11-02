@@ -1,6 +1,8 @@
+//ui/main/contratos/ContratoAdapter
 package com.example.inmobiliaria.ui.main.contratos;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.inmobiliaria.R;
@@ -19,13 +22,11 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
   private Context context;
   private List<Inmueble> lista;
   private LayoutInflater li;
-  private OnContratoClickListener listener;
 
-  public ContratoAdapter(Context context, List<Inmueble> lista, OnContratoClickListener listener) {
+  public ContratoAdapter(Context context, List<Inmueble> lista) {
     this.context = context;
     this.lista = lista;
     this.li = LayoutInflater.from(context);
-    this.listener = listener;
   }
 
   public void setLista(List<Inmueble> nuevaLista) {
@@ -55,7 +56,13 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
             .placeholder(R.drawable.house) // Imagen placeholder mientras carga
             .into(holder.foto);
 
-    holder.btnVer.setOnClickListener(v -> listener.onVerContratoClick(inmuebleActual));
+    holder.btnVer.setOnClickListener(v -> {
+      // El Adapter ahora crea el Bundle y navega
+      Bundle bundle = new Bundle();
+      bundle.putSerializable("inmueble", inmuebleActual);
+      Navigation.findNavController(v)
+              .navigate(R.id.action_nav_contrato_to_detalleContratoFragment, bundle);
+    });
   }
 
   @Override
@@ -73,8 +80,4 @@ public class ContratoAdapter extends RecyclerView.Adapter<ContratoAdapter.ViewHo
     }
   }
 
-  // Interfaz para el click
-  public interface OnContratoClickListener {
-    void onVerContratoClick(Inmueble inmueble);
   }
-}

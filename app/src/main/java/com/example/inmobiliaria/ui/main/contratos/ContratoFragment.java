@@ -1,3 +1,4 @@
+//ui/main/contratos/ContratoFragment
 package com.example.inmobiliaria.ui.main.contratos;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -50,15 +51,7 @@ public class ContratoFragment extends Fragment {
 
     adapter = new ContratoAdapter(
             getContext(),
-            new ArrayList<>(),
-            inmueble -> {
-              // Accion de Navegacion al detalle
-              Bundle bundle = new Bundle();
-              bundle.putSerializable("inmueble", inmueble);
-              // Usamos la accion que definiremos en el navigation graph
-              Navigation.findNavController(requireView())
-                      .navigate(R.id.action_nav_contrato_to_detalleContratoFragment, bundle);
-            }
+            new ArrayList<>()
     );
 
     binding.rvContratos.setAdapter(adapter);

@@ -4,6 +4,7 @@ package com.example.inmobiliaria.ui.main.inquilinos;
 
 import android.content.Context;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -28,12 +30,10 @@ public class InquilinoAdapter extends RecyclerView.Adapter<InquilinoAdapter.View
   private Context context;
   private List<Inmueble> lista;
   private LayoutInflater li;
-  private OnInmuebleClickListener listener;
-  public InquilinoAdapter(Context context, List<Inmueble> lista, OnInmuebleClickListener listener) {
+  public InquilinoAdapter(Context context, List<Inmueble> lista) {
     this.context = context;
     this.lista = lista;
     this.li = LayoutInflater.from(context);;
-    this.listener = listener;
   }
 
   // El Fragment usara esto para actualizar la lista cuando lleguen los datos
@@ -73,7 +73,11 @@ public class InquilinoAdapter extends RecyclerView.Adapter<InquilinoAdapter.View
       holder.btnVer.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-          listener.onVerClick(inmuebleActual);
+          // El Adapter ahora es "inteligente" y maneja la navegación
+          Bundle bundle = new Bundle();
+          bundle.putSerializable("inmueble", inmuebleActual);
+          Navigation.findNavController(v)
+                  .navigate(R.id.detalleInquilinoFragment, bundle);
         }
       });
     }
@@ -96,10 +100,6 @@ public class InquilinoAdapter extends RecyclerView.Adapter<InquilinoAdapter.View
       foto = itemView.findViewById(R.id.ivInmuebleAlquilado);
       btnVer = itemView.findViewById(R.id.btnVerInquilino);
     }
-  }
-
-  public interface OnInmuebleClickListener {
-    void onVerClick(Inmueble inmueble);
   }
 
 }

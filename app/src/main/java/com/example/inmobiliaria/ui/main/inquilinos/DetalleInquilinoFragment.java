@@ -33,12 +33,9 @@ public class DetalleInquilinoFragment extends Fragment {
     View root = binding.getRoot();
 
     // Observer para errores
-    vm.getMError().observe(getViewLifecycleOwner(), new Observer<String>() {
-      @Override
-      public void onChanged(String s) {
-        Toast.makeText(requireContext(), s, Toast.LENGTH_LONG).show();
-      }
-    });
+    vm.getMError().observe(getViewLifecycleOwner(), error ->
+            Toast.makeText(requireContext(), error, Toast.LENGTH_LONG).show()
+    );
 
     // Observer para el inquilino
     vm.getMInquilino().observe(getViewLifecycleOwner(), new Observer<Inquilino>() {

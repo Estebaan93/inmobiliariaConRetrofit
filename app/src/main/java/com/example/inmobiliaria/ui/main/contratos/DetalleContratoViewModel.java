@@ -1,10 +1,8 @@
-//ui/main/contratos/DetalleContratoViewModel
+// ui/main/contratos/DetalleContratoViewModel
 package com.example.inmobiliaria.ui.main.contratos;
 
 import android.app.Application;
 import android.os.Bundle;
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -22,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetalleContratoViewModel extends AndroidViewModel {
+  // LiveData para los campos individuales de la UI
   private final MutableLiveData<String> mContratoId = new MutableLiveData<>();
   private final MutableLiveData<String> mFechaInicio = new MutableLiveData<>();
   private final MutableLiveData<String> mFechaFin = new MutableLiveData<>();
@@ -29,68 +28,41 @@ public class DetalleContratoViewModel extends AndroidViewModel {
   private final MutableLiveData<String> mInquilinoNombre = new MutableLiveData<>();
   private final MutableLiveData<String> mInmuebleDireccion = new MutableLiveData<>();
   private final MutableLiveData<String> mError = new MutableLiveData<>();
-  private final MutableLiveData<Integer> mVisibilidadCargando = new MutableLiveData<>();
-  private final MutableLiveData<Bundle> mEventoNavegar = new MutableLiveData<>();
+
+  // LiveData para el objeto Contrato (para el listener del Fragment)
+  private final MutableLiveData<Contrato> mContrato = new MutableLiveData<>();
+
   private final ContratoRepositorio repo;
-  private Contrato contratoActual; // Guardamos el contrato para la navegacion
 
   public DetalleContratoViewModel(@NonNull Application application) {
     super(application);
     repo = new ContratoRepositorio(application);
   }
 
-  // Getters para los LiveData de la UI
-  public LiveData<String> getMContratoId() {
-    return mContratoId;
-  }
-  public LiveData<String> getMFechaInicio() {
-    return mFechaInicio;
-  }
-  public LiveData<String> getMFechaFin() {
-    return mFechaFin;
-  }
-  public LiveData<String> getMMonto() {
-    return mMonto;
-  }
-  public LiveData<String> getMInquilinoNombre() {
-    return mInquilinoNombre;
-  }
-  public LiveData<String> getMInmuebleDireccion() {
-    return mInmuebleDireccion;
-  }
-  // Getters para estados
-  public LiveData<String> getMError() {
-    return mError;
-  }
-  public LiveData<Integer> getMVisibilidadCargando() {
-    return mVisibilidadCargando;
-  }
-  // Getter para el evento de navegacion
-  public LiveData<Bundle> getMEventoNavegar() {
-    return mEventoNavegar;
-  }
+  // Getters para la UI
+  public LiveData<String> getMContratoId() { return mContratoId; }
+  public LiveData<String> getMFechaInicio() { return mFechaInicio; }
+  public LiveData<String> getMFechaFin() { return mFechaFin; }
+  public LiveData<String> getMMonto() { return mMonto; }
+  public LiveData<String> getMInquilinoNombre() { return mInquilinoNombre; }
+  public LiveData<String> getMInmuebleDireccion() { return mInmuebleDireccion; }
+  public LiveData<String> getMError() { return mError; }
+
+  // Getter para el Contrato (usado por el Fragment para el listener)
+  public LiveData<Contrato> getMContrato() { return mContrato; }
+
+
   public void cargarContrato(Bundle b) {
-    mVisibilidadCargando.setValue(View.VISIBLE);
-
-    // Validacion del Bundle
-    if (!validarBundle(b)) {
-      return;
-    }
-
-    // Extraer el inmueble del Bundle
+    if (!validarBundle(b)) return;
     Inmueble inm = (Inmueble) b.getSerializable("inmueble");
-    if (!validarInmueble(inm)) {
-      return;
-    }
+    if (!validarInmueble(inm)) return;
 
-    // Realizar la peticion al repositorio
     obtenerContratoDesdeRepositorio(inm.getIdInmueble());
   }
 
   private boolean validarBundle(Bundle b) {
     if (b == null) {
       publicarError("Error: No se recibio informacion del inmueble");
-      mVisibilidadCargando.setValue(View.GONE);
       return false;
     }
     return true;
@@ -99,7 +71,6 @@ public class DetalleContratoViewModel extends AndroidViewModel {
   private boolean validarInmueble(Inmueble inm) {
     if (inm == null) {
       publicarError("Error al cargar el inmueble desde el bundle");
-      mVisibilidadCargando.setValue(View.GONE);
       return false;
     }
     return true;
@@ -109,8 +80,6 @@ public class DetalleContratoViewModel extends AndroidViewModel {
     repo.obtenerContratoPorInmueble(idInmueble, new Callback<Contrato>() {
       @Override
       public void onResponse(Call<Contrato> call, Response<Contrato> response) {
-        mVisibilidadCargando.postValue(View.GONE);
-
         if (esRespuestaExitosa(response)) {
           procesarContratoExitoso(response.body());
         } else if (esErrorNoEncontrado(response)) {
@@ -122,13 +91,13 @@ public class DetalleContratoViewModel extends AndroidViewModel {
 
       @Override
       public void onFailure(Call<Contrato> call, Throwable t) {
-        mVisibilidadCargando.postValue(View.GONE);
         publicarError("Error del servidor: " + t.getMessage());
       }
     });
   }
 
   private boolean esRespuestaExitosa(Response<Contrato> response) {
+    // Asegura que la respuesta es exitosa Y tiene un cuerpo
     return response.isSuccessful() && response.body() != null;
   }
 
@@ -137,20 +106,15 @@ public class DetalleContratoViewModel extends AndroidViewModel {
   }
 
   private void procesarContratoExitoso(Contrato contrato) {
-    contratoActual = contrato;
+    // Publica el objeto Contrato (nunca sera null aquí)
+    mContrato.setValue(contrato);
 
-    // Publicar datos basicos
+    // Publica los strings individuales para la UI
     mContratoId.setValue(String.valueOf(contrato.getIdContrato()));
     mFechaInicio.setValue(contrato.getFechaInicio());
     mFechaFin.setValue(contrato.getFechaFinalizacion());
-
-    // Formatear y publicar monto
     mMonto.setValue(formatearMoneda(contrato.getMontoAlquiler()));
-
-    // Procesar y publicar informacion del inquilino
     mInquilinoNombre.setValue(procesarInformacionInquilino(contrato));
-
-    // Procesar y publicar informacion del inmueble
     mInmuebleDireccion.setValue(procesarInformacionInmueble(contrato));
   }
 
@@ -161,9 +125,10 @@ public class DetalleContratoViewModel extends AndroidViewModel {
 
   private String procesarInformacionInquilino(Contrato contrato) {
     if (contrato.getInquilino() != null) {
-      return contrato.getInquilino().getNombre() + " " +
-              contrato.getInquilino().getApellido() +
-              " (DNI: " + contrato.getInquilino().getDni() + ")";
+      return String.format("%s %s (DNI: %s)",
+              contrato.getInquilino().getNombre(),
+              contrato.getInquilino().getApellido(),
+              contrato.getInquilino().getDni());
     }
     return "Inquilino no disponible";
   }
@@ -175,34 +140,9 @@ public class DetalleContratoViewModel extends AndroidViewModel {
     return "Inmueble no disponible";
   }
 
-  public void navegarAPagos() {
-    if (validarContratoParaNavegacion()) {
-      Bundle bundle = crearBundleNavegacion();
-      // Solo publica si el bundle fue creado exitosamente
-      if (bundle != null) {
-        mEventoNavegar.setValue(bundle);
-      }
-    }
-  }
-  private boolean validarContratoParaNavegacion() {
-    if (contratoActual == null) {
-      publicarError("Error: No se ha cargado el contrato");
-      return false;
-    }
-    return true;
-  }
-  private Bundle crearBundleNavegacion() {
-    Bundle bundle = new Bundle();
-    bundle.putInt("contratoId", contratoActual.getIdContrato());
-    return bundle;
-  }
-  public void finNavegacion() {
-    mEventoNavegar.setValue(null);
-  }
   private void publicarError(String mensaje) {
     if (mensaje != null && !mensaje.trim().isEmpty()) {
       mError.postValue(mensaje);
     }
   }
-
 }

@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.inmobiliaria.data.model.Inmueble;
 import com.example.inmobiliaria.data.repositorio.ContratoRepositorio;
@@ -37,12 +36,12 @@ public class ContratoViewModel extends AndroidViewModel {
   public void cargarContratosVigentes() {
     mCargando.setValue(true);
 
-    // Llamamos al método del repositorio
+    // Llamamos al metodo del repositorio
     repo.obtenerInmueblesAlquilados(new Callback<List<Inmueble>>() {
       @Override
       public void onResponse(Call<List<Inmueble>> call, Response<List<Inmueble>> response) {
         mCargando.postValue(false);
-        // Validamos que la API responda exitosamente Y que la lista no esté vacía
+        // Validamos que la API responda exitosamente Y que la lista no este vacia
         if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
           // Esta es la lista de Inmuebles con contrato vigente
           mLista.postValue(response.body());
