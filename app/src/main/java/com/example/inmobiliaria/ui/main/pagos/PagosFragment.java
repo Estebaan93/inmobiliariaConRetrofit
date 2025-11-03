@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,21 +42,18 @@ public class PagosFragment extends Fragment {
 
   private void configurarRecyclerView() {
     binding.rvPagos.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new PagosAdapter(new ArrayList<>()); // El Adapter ya no necesita el Context
+    adapter = new PagosAdapter(new ArrayList<>());
     binding.rvPagos.setAdapter(adapter);
   }
 
   private void configurarObservadores() {
-    // Usar referencias a metodos (::) es mss limpio
+    // El ViewModel decide que mostrar
     vm.getMListaPagos().observe(getViewLifecycleOwner(), adapter::setListaPagos);
     vm.getMCargando().observe(getViewLifecycleOwner(), binding.progressBarPagos::setVisibility);
     vm.getMVisibilidadRecyclerView().observe(getViewLifecycleOwner(), binding.rvPagos::setVisibility);
     vm.getMCodigoContrato().observe(getViewLifecycleOwner(), binding.tvCodigoContrato::setText);
-    vm.getMVisibilidadMensajeVacio().observe(getViewLifecycleOwner(), binding.tvMensajeVacio::setVisibility);
-
-    vm.getMError().observe(getViewLifecycleOwner(), error ->
-            Toast.makeText(getContext(), error, Toast.LENGTH_LONG).show()
-    );
+    vm.getMVisibilidadMensaje().observe(getViewLifecycleOwner(), binding.tvMensajeVacio::setVisibility);
+    vm.getMensajeEnPantalla().observe(getViewLifecycleOwner(), binding.tvMensajeVacio::setText);
   }
 
   @Override

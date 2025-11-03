@@ -83,6 +83,10 @@
     <action
         android:id="@+id/action_detalleInquilinoFragment_to_nav_inquilino"
         app:destination="@id/nav_inquilino" />
+    <!-- nuevo03-->
+    <action
+        android:id="@+id/action_detalleInquilinoFragment_to_pagosFragment"
+        app:destination="@id/pagosFragment" />
   </fragment>
 
   <fragment
@@ -90,7 +94,7 @@
       android:name="com.example.inmobiliaria.ui.main.contratos.DetalleContratoFragment"
       android:label="Detalle del Contrato"
       tools:layout="@layout/fragment_detalle_contrato">
-    <!-- Acción para ir a Pagos -->
+    <!-- Accion para ir a Pagos -->
     <action
         android:id="@+id/action_detalleContratoFragment_to_pagosFragment"
         app:destination="@id/pagosFragment" />
@@ -101,7 +105,7 @@
         app:argType="com.example.inmobiliaria.data.model.Inmueble" />
   </fragment>
 
-  <!-- 3. AÑADIMOS EL NUEVO FRAGMENT 'pagosFragment' -->
+  <!--AÑADIMOS EL NUEVO FRAGMENT 'pagosFragment' -->
   <fragment
       android:id="@+id/pagosFragment"
       android:name="com.example.inmobiliaria.ui.main.pagos.PagosFragment"

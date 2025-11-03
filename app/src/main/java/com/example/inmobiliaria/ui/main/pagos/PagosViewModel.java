@@ -22,10 +22,10 @@ import retrofit2.Response;
 
 public class PagosViewModel extends AndroidViewModel {
   private final MutableLiveData<List<Pago>> mListaPagos = new MutableLiveData<>(new ArrayList<>());
-  private final MutableLiveData<String> mError = new MutableLiveData<>();
+  private final MutableLiveData<String> mMensajeEnPantalla = new MutableLiveData<>();
   private final MutableLiveData<Integer> mCargando = new MutableLiveData<>(View.GONE);
   private final MutableLiveData<String> mCodigoContrato = new MutableLiveData<>();
-  private final MutableLiveData<Integer> mVisibilidadMensajeVacio = new MutableLiveData<>(View.GONE);
+  private final MutableLiveData<Integer> mVisibilidadMensaje = new MutableLiveData<>(View.GONE);
   private final MutableLiveData<Integer> mVisibilidadRecyclerView = new MutableLiveData<>(View.VISIBLE);
   private final ContratoRepositorio repo;
 
@@ -38,8 +38,8 @@ public class PagosViewModel extends AndroidViewModel {
   public LiveData<List<Pago>> getMListaPagos() {
     return mListaPagos;
   }
-  public LiveData<String> getMError() {
-    return mError;
+  public LiveData<String> getMensajeEnPantalla() {
+    return mMensajeEnPantalla;
   }
   public LiveData<Integer> getMCargando() {
     return mCargando;
@@ -47,8 +47,8 @@ public class PagosViewModel extends AndroidViewModel {
   public LiveData<String> getMCodigoContrato() {
     return mCodigoContrato;
   }
-  public LiveData<Integer> getMVisibilidadMensajeVacio() {
-    return mVisibilidadMensajeVacio;
+  public LiveData<Integer> getMVisibilidadMensaje() {
+    return mVisibilidadMensaje;
   }
   public LiveData<Integer> getMVisibilidadRecyclerView() {
     return mVisibilidadRecyclerView;
@@ -56,14 +56,14 @@ public class PagosViewModel extends AndroidViewModel {
 
   public void cargarPagos(Bundle bundle) {
     if (bundle == null) {
-      publicarError("Error: No se recibieron datos del contrato");
+      mostrarMensajeError("Error: No se recibieron datos del contrato");
       return;
     }
 
     int contratoId = bundle.getInt("contratoId", -1);
 
     if (contratoId == -1) {
-      publicarError("Error: No se recibio el ID del contrato");
+      mostrarMensajeError("Error: No se recibio el ID del contrato");
       return;
     }
 
@@ -72,7 +72,7 @@ public class PagosViewModel extends AndroidViewModel {
 
   private void obtenerPagosDesdeRepositorio(int contratoId) {
     mostrarEstadoCargando();
-    mCodigoContrato.setValue(String.format("Contrato #%d", contratoId)); // String.format
+    mCodigoContrato.setValue(String.format("Contrato #%d", contratoId));
 
     repo.obtenerPagosPorContrato(contratoId, new Callback<List<Pago>>() {
       @Override
@@ -81,21 +81,16 @@ public class PagosViewModel extends AndroidViewModel {
         if (esRespuestaExitosa(response)) {
           procesarRespuestaExitosa(response.body());
         } else {
-          procesarRespuestaFallida("Error al cargar los pagos: " + response.message());
+          mostrarMensajeError("Error al cargar los pagos");
         }
       }
 
       @Override
       public void onFailure(Call<List<Pago>> call, Throwable t) {
-        procesarRespuestaFallida("Error del servidor: " + t.getMessage());
+        ocultarEstadoCargando();
+        mostrarMensajeError("Error de conexion. Intente nuevamente");
       }
     });
-  }
-
-  private void procesarRespuestaFallida(String error) {
-    ocultarEstadoCargando();
-    publicarError(error);
-    mostrarMensajeListaVacia(); // Mostrar "vacio" en lugar de una pantalla en blanco
   }
 
   private boolean esRespuestaExitosa(Response<List<Pago>> response) {
@@ -104,7 +99,7 @@ public class PagosViewModel extends AndroidViewModel {
 
   private void procesarRespuestaExitosa(List<Pago> pagos) {
     if (pagos.isEmpty()) {
-      mostrarMensajeListaVacia();
+      mostrarMensajeVacio();
     } else {
       mostrarListaConDatos(pagos);
     }
@@ -113,28 +108,30 @@ public class PagosViewModel extends AndroidViewModel {
   private void mostrarEstadoCargando() {
     mCargando.postValue(View.VISIBLE);
     mVisibilidadRecyclerView.postValue(View.GONE);
-    mVisibilidadMensajeVacio.postValue(View.GONE);
+    mVisibilidadMensaje.postValue(View.GONE);
   }
 
   private void ocultarEstadoCargando() {
     mCargando.postValue(View.GONE);
   }
 
-  private void mostrarMensajeListaVacia() {
-    mVisibilidadMensajeVacio.postValue(View.VISIBLE);
+  private void mostrarMensajeVacio() {
+    mMensajeEnPantalla.postValue("No hay pagos registrados para este contrato");
+    mVisibilidadMensaje.postValue(View.VISIBLE);
+    mVisibilidadRecyclerView.postValue(View.GONE);
+    mListaPagos.postValue(new ArrayList<>());
+  }
+
+  private void mostrarMensajeError(String error) {
+    mMensajeEnPantalla.postValue(error);
+    mVisibilidadMensaje.postValue(View.VISIBLE);
     mVisibilidadRecyclerView.postValue(View.GONE);
     mListaPagos.postValue(new ArrayList<>());
   }
 
   private void mostrarListaConDatos(List<Pago> pagos) {
-    mVisibilidadMensajeVacio.postValue(View.GONE);
+    mVisibilidadMensaje.postValue(View.GONE);
     mVisibilidadRecyclerView.postValue(View.VISIBLE);
     mListaPagos.postValue(pagos);
-  }
-
-  private void publicarError(String mensaje) {
-    if (mensaje != null && !mensaje.trim().isEmpty()) {
-      mError.postValue(mensaje);
-    }
   }
 }

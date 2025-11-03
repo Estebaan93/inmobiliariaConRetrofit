@@ -20,6 +20,12 @@ import retrofit2.Response;
 public class DetalleInquilinoViewModel extends AndroidViewModel {
   private final MutableLiveData<String> mError = new MutableLiveData<>();
   private final MutableLiveData<Inquilino> mInquilino = new MutableLiveData<>();
+
+  //nuevo03
+  private final MutableLiveData<Contrato> mContrato = new MutableLiveData<>();
+  private final MutableLiveData<Contrato> mMostrarDialogoContrato = new MutableLiveData<>();
+
+
   private final InquilinoRepositorio repo;
   public DetalleInquilinoViewModel(@NonNull Application application) {
     super(application);
@@ -29,6 +35,10 @@ public class DetalleInquilinoViewModel extends AndroidViewModel {
   public LiveData<String> getMError() {
     return mError;
   }
+
+  //nuevo03
+  public LiveData<Contrato> getMContrato() { return mContrato; }
+  public LiveData<Contrato> getMostrarDialogoContrato() { return mMostrarDialogoContrato; }
 
   public LiveData<Inquilino> getMInquilino() {
     return mInquilino;
@@ -54,6 +64,7 @@ public class DetalleInquilinoViewModel extends AndroidViewModel {
 
           if (inquilino != null) {
             mInquilino.setValue(inquilino);
+            mContrato.setValue(contrato); //nuevo03
           } else {
             mError.setValue("El contrato no tiene inquilino asociado");
           }
@@ -71,6 +82,10 @@ public class DetalleInquilinoViewModel extends AndroidViewModel {
     });
   }
 
-
+  //nuevo03
+  public void onVerContratoClick() {
+    // El ViewModel se lo pasa directamente al Fragment
+    mMostrarDialogoContrato.setValue(mContrato.getValue());
+  }
 
 }
