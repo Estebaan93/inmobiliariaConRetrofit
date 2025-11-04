@@ -26,12 +26,15 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public LiveData<String> getmNombre() {
+
     return mNombre;
   }
   public LiveData<String> getmCorreo() {
+
     return mCorreo;
   }
   public LiveData<String> getmMensaje() {
+
     return mMensaje;
   }
 

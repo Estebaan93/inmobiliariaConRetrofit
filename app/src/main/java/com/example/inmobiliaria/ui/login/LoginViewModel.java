@@ -3,6 +3,7 @@ package com.example.inmobiliaria.ui.login;
 
 import android.app.Application;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -22,8 +23,11 @@ public class LoginViewModel extends AndroidViewModel {
   private MutableLiveData<String> mMensaje;
   public MutableLiveData<Boolean> mCargar;
   private MutableLiveData<Bundle> mIrAlmenu;
-
+  private final MutableLiveData<String> mRealizarLlamada = new MutableLiveData<>();
+  private final MutableLiveData<Boolean> mSolicitarPermiso = new MutableLiveData<>();
   private final PropietarioRepositorio repo;
+  private static final String PHONE_NUMBER = "2664123456";
+  private static final int REQUEST_CALL_PERMISSION = 1;
 
   public LoginViewModel(@NonNull Application application) {
     super(application);
@@ -47,7 +51,15 @@ public class LoginViewModel extends AndroidViewModel {
   }
 
   public LiveData<Bundle> getmIrAlmenu(){
+
     return mIrAlmenu;
+  }
+  public LiveData<String> getRealizarLlamada() {
+    return mRealizarLlamada;
+  }
+
+  public LiveData<Boolean> getSolicitarPermiso() {
+    return mSolicitarPermiso;
   }
 
   // Verifica si hay token guardado para navegaciona
@@ -122,11 +134,34 @@ public class LoginViewModel extends AndroidViewModel {
       @Override
       public void onFailure(Call<String> call, Throwable t) {
         mCargar.postValue(false);
-        Log.e("API_LOGIN_ERROR", "Error de conexión: " + t.getMessage(), t);
+        Log.e("API_LOGIN_ERROR", "Error de conexion: " + t.getMessage(), t);
         mMensaje.postValue("Error de conexion con el servidor");
       }
     });
-
   }
+
+  public void onTelefonoAgitado(boolean tienePermiso) {
+    if (tienePermiso) {
+      mRealizarLlamada.postValue(PHONE_NUMBER);
+    } else {
+      mSolicitarPermiso.postValue(true);
+    }
+  }
+  public void onPermisoOtorgado() {
+    mRealizarLlamada.postValue(PHONE_NUMBER);
+  }
+  public void onPermisoDenegado() {
+    mMensaje.postValue("Permiso denegado para hacer llamadas");
+  }
+  public void onResultadoPermiso(int requestCode, int[] grantResults) {
+    if (requestCode != REQUEST_CALL_PERMISSION) return;
+
+    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+      onPermisoOtorgado();
+    } else {
+      onPermisoDenegado();
+    }
+  }
+
 
 }
