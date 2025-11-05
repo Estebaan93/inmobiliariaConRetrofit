@@ -15,7 +15,7 @@ import com.example.inmobiliaria.data.repositorio.PropietarioRepositorio;
 
 
 public class LogoutViewModel extends AndroidViewModel {
-  private MutableLiveData<Boolean> mVolverAlLogin;
+  private MutableLiveData<String> mVolverAlLogin;
   private final PropietarioRepositorio repo;
 
   public LogoutViewModel(@NonNull Application application) {
@@ -23,7 +23,7 @@ public class LogoutViewModel extends AndroidViewModel {
     repo= new PropietarioRepositorio(application);
   }
 
-  public LiveData<Boolean> getVolverAlLogin() {
+  public LiveData<String> getVolverAlLogin() {
     if (mVolverAlLogin == null) {
       mVolverAlLogin = new MutableLiveData<>();
     }
@@ -33,14 +33,14 @@ public class LogoutViewModel extends AndroidViewModel {
 
   public void cerrarSesion(){
     repo.cerrarSesion();
-    Toast.makeText(getApplication(), "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
+    //Toast.makeText(getApplication(), "Sesion cerrada correctamente", Toast.LENGTH_SHORT).show();
 
     //Emitimos evento para que el fragment navegue al login
     if (mVolverAlLogin == null) {
       mVolverAlLogin = new MutableLiveData<>();
     }
-    mVolverAlLogin.postValue(true);
+    mVolverAlLogin.postValue("Sesion cerrada correctamente");
   }
 
-  // TODO: Implement the ViewModel
+
 }

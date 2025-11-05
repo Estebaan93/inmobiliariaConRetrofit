@@ -144,15 +144,9 @@ public class PerfilViewModel extends AndroidViewModel {
       mEditable.setValue(true);
       mBtnTx.setValue("Guardar");
     }
-    }
+  }
 
 
-  // Devuelve mensaje actual solo si no está vacío
-  /*public String obtenerMensajeVisible() {
-    String m = mMensaje.getValue();
-    if (m == null || m.isEmpty()) return null;
-    return m;
-  }*/
 
   // --- Cambiar contraseña ---
   public void onCambiarPasswordClick(String actual, String nueva, String confirmar) {

@@ -32,12 +32,17 @@ public class LogoutFragment extends Fragment {
                            @Nullable Bundle savedInstanceState) {
     mv= new ViewModelProvider(this).get(LogoutViewModel.class);
 
-    //Observar evento del ViewModel (sin if, solo reacciona)
-    mv.getVolverAlLogin().observe(getViewLifecycleOwner(), volver -> {
+    //Observar evento del ViewModel
+    mv.getVolverAlLogin().observe(getViewLifecycleOwner(), mensaje -> {
       // Volver al LoginActivity
       Intent intent = new Intent(requireActivity(), LoginActivity.class);
       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+      //nuevo05
+      intent.putExtra("logout_message", mensaje);
+
       startActivity(intent);
+
       requireActivity().finish(); // Cierra el MainActivity actual
     });
 

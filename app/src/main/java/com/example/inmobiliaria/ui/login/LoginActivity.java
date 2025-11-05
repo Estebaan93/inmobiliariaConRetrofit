@@ -45,6 +45,14 @@ public class LoginActivity extends AppCompatActivity {
     //iniciali el viewmodel
     mv= new ViewModelProvider(this).get(LoginViewModel.class);
 
+    // NUEVO: Revisar si venimos de un Logout
+    String logoutMsg = getIntent().getStringExtra("logout_message");
+    if (logoutMsg != null && !logoutMsg.isEmpty()) {
+      mv.setInitialMessage(logoutMsg);
+      // Opcional: Limpiar el extra para que no se muestre si gira la pantalla
+      getIntent().removeExtra("logout_message");
+    }
+
     initLlamadaDetectar();
     observarViewModel();
 
@@ -71,12 +79,19 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void observarViewModel() {
+    // 1. Asigna el texto del mensaje (sin if)
     mv.getmMensaje().observe(this, m ->
-            Toast.makeText(this, m, Toast.LENGTH_SHORT).show()
+            binding.tVLoginMensaje.setText(m)
     );
 
-    mv.getmCargar().observe(this, visible ->
-            binding.progressBar.setVisibility(visible ? View.VISIBLE : View.GONE)
+    // 2. Asigna la visibilidad del mensaje (sin if)
+    mv.getmMensajeVisibility().observe(this, visibility ->
+            binding.tVLoginMensaje.setVisibility(visibility)
+    );
+
+    // 3. Asigna la visibilidad del loader (sin lógica ternaria)
+    mv.getmCargarVisibility().observe(this, visibility ->
+            binding.progressBar.setVisibility(visibility)
     );
 
     mv.getmIrAlmenu().observe(this, datos -> {

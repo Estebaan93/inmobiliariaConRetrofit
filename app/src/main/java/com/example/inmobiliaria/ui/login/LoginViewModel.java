@@ -6,11 +6,13 @@ import android.app.Application;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import com.example.inmobiliaria.data.repositorio.PropietarioRepositorio;
 
@@ -28,6 +30,11 @@ public class LoginViewModel extends AndroidViewModel {
   private final PropietarioRepositorio repo;
   private static final String PHONE_NUMBER = "2664123456";
   private static final int REQUEST_CALL_PERMISSION = 1;
+
+
+  // NUEVOS LiveData para visibilidad (derivados)
+  private LiveData<Integer> mCargarVisibility;
+  private LiveData<Integer> mMensajeVisibility;
 
   public LoginViewModel(@NonNull Application application) {
     super(application);
@@ -62,19 +69,50 @@ public class LoginViewModel extends AndroidViewModel {
     return mSolicitarPermiso;
   }
 
+
+  //
+  public LiveData<Integer> getmCargarVisibility() {
+    if (mCargarVisibility == null) {
+      // Transforma el LiveData<Boolean> en LiveData<Integer>
+      mCargarVisibility = Transformations.map(getmCargar(), isVisible ->
+              isVisible ? View.VISIBLE : View.GONE
+      );
+    }
+    return mCargarVisibility;
+  }
+
+  public LiveData<Integer> getmMensajeVisibility() {
+    if (mMensajeVisibility == null) {
+      // Transforma el LiveData<String> en LiveData<Integer>
+      mMensajeVisibility = Transformations.map(getmMensaje(), msg ->
+              (msg != null && !msg.isEmpty()) ? View.VISIBLE : View.GONE
+      );
+    }
+    return mMensajeVisibility;
+  }
+  //
+
+  public void setInitialMessage(String msg) {
+    getmMensaje(); // Asegura que mMensaje esté inicializado
+    if (msg != null && !msg.isEmpty()) {
+      mMensaje.postValue(msg);
+    }
+  }
+
+
   // Verifica si hay token guardado para navegaciona
   private void verificarToken() {
     String token = repo.leerToken();
     if (token == null || token.isEmpty()) return;
 
     // Mostramos loader
-    if (mCargar == null) mCargar = new MutableLiveData<>();
-    mCargar.postValue(true);
+    getmCargar(); // Asegura inicialización//nuevo05
+    mCargar.postValue(true);//nuevo05
 
     // Llamada a la API para validar token
     repo.validarToken(token, new Callback<com.example.inmobiliaria.data.model.Propietario>() {
       @Override
-      public void onResponse(Call<com.example.inmobiliaria.data.model.Propietario> call, Response<com.example.inmobiliaria.data.model.Propietario> response) {
+       public void onResponse(Call<com.example.inmobiliaria.data.model.Propietario> call, Response<com.example.inmobiliaria.data.model.Propietario> response) {
         mCargar.postValue(false);
         if (response.isSuccessful()) {
           // Token valido,  navegar al menu
@@ -84,6 +122,7 @@ public class LoginViewModel extends AndroidViewModel {
         } else {
           // Token vencido, limpiar y quedarse en login
           repo.guardarToken(null);
+          getmMensaje();//nuevo05
           mMensaje.postValue("Sesion expirada, inicie sesion nuevamente");
         }
       }
@@ -91,12 +130,18 @@ public class LoginViewModel extends AndroidViewModel {
       @Override
       public void onFailure(Call<com.example.inmobiliaria.data.model.Propietario> call, Throwable t) {
         mCargar.postValue(false);
+        getmMensaje();//nuevo05
         mMensaje.postValue("No se pudo verificar la sesion");
       }
     });
   }
 
   public void login(String usuario, String clave){
+    // LIMPIAR MENSAJE ANTERIOR
+    getmMensaje(); // Asegura inicializacion
+    mMensaje.postValue("");
+
+    getmCargar(); // Asegura inicializacion
     mCargar.postValue(true); //Muestra el loader
 
     if (usuario.trim().isEmpty() || clave.trim().isEmpty()) {
