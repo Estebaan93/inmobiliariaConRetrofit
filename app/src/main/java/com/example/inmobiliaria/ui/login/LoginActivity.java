@@ -79,17 +79,17 @@ public class LoginActivity extends AppCompatActivity {
   }
 
   private void observarViewModel() {
-    // 1. Asigna el texto del mensaje (sin if)
+    // Asigna el texto del mensaje
     mv.getmMensaje().observe(this, m ->
             binding.tVLoginMensaje.setText(m)
     );
 
-    // 2. Asigna la visibilidad del mensaje (sin if)
+    // Asigna la visibilidad del mensaje
     mv.getmMensajeVisibility().observe(this, visibility ->
             binding.tVLoginMensaje.setVisibility(visibility)
     );
 
-    // 3. Asigna la visibilidad del loader (sin lógica ternaria)
+    // Asigna la visibilidad del loader
     mv.getmCargarVisibility().observe(this, visibility ->
             binding.progressBar.setVisibility(visibility)
     );
